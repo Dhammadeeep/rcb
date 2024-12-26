@@ -1,0 +1,30 @@
+import numpy as np
+from scipy import stats
+
+# Data and corresponding frequencies
+data = [10,11,12,13,14]
+frequency = [1,2,1,3,2]
+
+# Expand data based on frequencies
+expanded_data = np.repeat(data, frequency)
+
+# Calculations
+mean = np.mean(expanded_data)
+median = np.median(expanded_data)
+mode = stats.mode(expanded_data)
+std_dev = np.std(expanded_data)
+variance = np.var(expanded_data)
+mean_deviation = np.mean(np.abs(expanded_data - mean))
+q1 = np.percentile(expanded_data, 25)
+q3 = np.percentile(expanded_data, 75)
+quartile_deviation = (q3 - q1) / 2
+
+
+# Results
+print(f"Mean: {mean:.2f}")
+print(f"Median: {median}")
+print(f"Mode: {mode[0]} ")
+print(f"Standard Deviation: {std_dev:.2f}")
+print(f"Variance: {variance:.2f}")
+print(f"Mean Deviation: {mean_deviation:.2f}")
+print(f"Quartile Deviation: {quartile_deviation}")
