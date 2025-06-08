@@ -1,42 +1,29 @@
-# Sample text to work with 
-text = " Hello, World! Welcome to Python programming Language. " 
- 
-# 1. Strip leading and trailing spaces 
-clean_text = text.strip() 
-print(f"Original Text: '{text}'") 
-print(f"Text after stripping spaces: '{clean_text}'") 
-# 2. Convert the text to uppercase 
-upper_text = clean_text.upper() 
-print(f"\nText in uppercase: '{upper_text}'") 
- 
-# 3. Convert the text to lowercase 
-lower_text = clean_text.lower() 
-print(f"\nText in lowercase: '{lower_text}'") 
- 
-# 4. Count occurrences of a substring (e.g., "o") 
-count_o = clean_text.count("o") 
-print(f"\nNumber of occurrences of 'o': {count_o}") 
- 
-# 5. Replace a word in the string 
-replaced_text = clean_text.replace("Python", "HTML") 
-print(f"\nText after replacing 'Python' with 'HTML': '{replaced_text}'") 
-# 6. Find the position of a word in the string 
-position_world = clean_text.find("World") 
-print(f"\nPosition of 'World' in the text: {position_world}") 
- 
-# 7. Split the text into words (by default on spaces) 
-words = clean_text.split() 
-print(f"\nList of words in the text: {words}") 
- 
-# 8. Join the words back into a single string 
-joined_text = " ".join(words) 
-8  
-print(f"\nText after joining words: '{joined_text}'") 
- 
-# 9. Check if the text starts with "Hello" 
-starts_with_hello = clean_text.startswith("Hello") 
-print(f"\nDoes the text start with 'Hello'? {starts_with_hello}") 
- 
-# 10. Check if the text ends with a specific word (e.g., "programming.") 
-ends_with_programming = clean_text.endswith("programming.") 
-print(f"\nDoes the text end with 'programming.'? {ends_with_programming}") 
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.datasets import fetch_california_housing
+
+# Load California Housing dataset
+data = fetch_california_housing()
+df = pd.DataFrame(data.data, columns=data.feature_names)
+df['MedHouseVal'] = data.target  # Add target as a column
+
+# Compute correlation matrix
+correlation_matrix = df.corr()
+
+# Display the correlation matrix
+print("Correlation Matrix:\n", correlation_matrix)
+
+# Plot heatmap
+plt.figure(figsize=(10, 8))
+sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', square=True, linewidths=.5)
+plt.title("Correlation Heatmap - California Housing Dataset")
+plt.tight_layout()
+plt.show()
+
+# Plot pairplot (optional: limit columns for better performance and readability)
+selected_features = ['MedInc', 'HouseAge', 'AveRooms', 'AveOccup', 'MedHouseVal']
+sns.pairplot(df[selected_features], corner=True, diag_kind='kde')
+plt.suptitle("Pair Plot of Selected Features", y=1.02)
+plt.tight_layout()
+plt.show()
