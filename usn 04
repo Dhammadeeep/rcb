@@ -26,4 +26,9 @@ def find_s_algorithm():
                 else:
                     hypothesis[i] = '?'  # Generalize otherwise
 
-return hypothesis
+    return hypothesis  # Correct indentation here
+
+# Call the function and print the result
+final_hypothesis = find_s_algorithm()
+print("\nFinal hypothesis:", final_hypothesis)
+
