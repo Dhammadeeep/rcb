@@ -17,6 +17,7 @@ print(word_vectors.doesnt_match("breakfast lunch dinner banana".split()))
 # Word similarity
 print(word_vectors.similarity('king', 'queen'))
 
+-------------------------------------------------------------------------------------------------------------
 
 2)import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
@@ -45,6 +46,7 @@ result=word_vectors.most_similar("man",topn=5 )
 for word, similarity in result:
  print(f"{word}: {similarity:.4f}")
 
+-------------------------------------------------------------------------------------------------------
 
 3)from gensim.models import Word2Vec
 
@@ -66,6 +68,7 @@ if input_word in model.wv:
 else:
  print(f"'{input_word}' is not in the vocabulary.")
 
+---------------------------------------------------------------------------------------------------------------------
 
 4)# Step 1: Pre-defined dictionary of words and their similar terms (static word
 word_embeddings = {
@@ -104,6 +107,7 @@ print(original_prompt)
 print("\nEnriched Prompt:")
 print(enriched_prompt)
 
+----------------------------------------------------------------------------------------------------------------
 
 5)# Step 1: Pre-defined dictionary of words and their similar terms
 word_embeddings = {
