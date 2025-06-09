@@ -1,29 +1,26 @@
-import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.datasets import fetch_california_housing
+from sklearn.decomposition import PCA
+import numpy as np
+import gensim.downloader as api
 
-# Load California Housing dataset
-data = fetch_california_housing()
-df = pd.DataFrame(data.data, columns=data.feature_names)
-df['MedHouseVal'] = data.target  # Add target as a column
-
-# Compute correlation matrix
-correlation_matrix = df.corr()
-
-# Display the correlation matrix
-print("Correlation Matrix:\n", correlation_matrix)
-
-# Plot heatmap
-plt.figure(figsize=(10, 8))
-sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', square=True, linewidths=.5)
-plt.title("Correlation Heatmap - California Housing Dataset")
-plt.tight_layout()
+word_vectors = api.load('glove-wiki-gigaword-100') # ~130MB
+# Sports words
+sports_words = ['football', 'soccer', 'tennis', 'basketball', 'cricket', 'goal', 'player', 'team', 'coach',
+'score']
+sports_vectors = np.array([word_vectors[word] for word in sports_words])
+# PCA Visualization
+pca = PCA(n_components=2)
+sports_2d = pca.fit_transform(sports_vectors)
+plt.figure(figsize=(8,6))
+for i, word in enumerate(sports_words):
+  plt.scatter(sports_2d[i,0], sports_2d[i,1])
+  plt.annotate(word, (sports_2d[i,0], sports_2d[i,1]))
+plt.title("PCA Visualization of Sports Words")
 plt.show()
 
-# Plot pairplot (optional: limit columns for better performance and readability)
-selected_features = ['MedInc', 'HouseAge', 'AveRooms', 'AveOccup', 'MedHouseVal']
-sns.pairplot(df[selected_features], corner=True, diag_kind='kde')
-plt.suptitle("Pair Plot of Selected Features", y=1.02)
-plt.tight_layout()
-plt.show()
+# to get 5 semantically similar words
+# Load pre-trained GloVe embeddings (100d)
+
+result=word_vectors.most_similar("man",topn=5 )
+for word, similarity in result:
+ print(f"{word}: {similarity:.4f}")
