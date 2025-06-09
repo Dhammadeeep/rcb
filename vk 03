@@ -1,3 +1,5 @@
+!pip install gensim==4.3.3 numpy==1.24.3
+
 from gensim.models import Word2Vec
 
 medical_data = [
