@@ -1,7 +1,7 @@
 !pip install gensim==4.3.3 numpy==1.24.3
 
 import gensim.downloader as api
-# import numpy as np
+import numpy as np
 # Load pre-trained GloVe embeddings (100d)
 word_vectors = api.load('glove-wiki-gigaword-100') # ~130MB
 print(f"Vocabulary size: {len(word_vectors.index_to_key)}")
