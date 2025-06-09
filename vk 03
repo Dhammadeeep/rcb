@@ -1,39 +1,19 @@
-import numpy as np
-import pandas as pd
-from sklearn.datasets import load_iris
-from sklearn.decomposition import PCA
-import matplotlib.pyplot as plt
+from gensim.models import Word2Vec
 
-# Load the Iris dataset
-iris = load_iris()
-data = iris.data
-labels = iris.target
-label_names = iris.target_names
+medical_data = [
+ ["patient", "doctor", "nurse", "hospital", "treatment"],
+ ["cancer", "chemotherapy", "radiation", "surgery", "recovery"],
+ ["infection", "antibiotics", "diagnosis", "disease", "virus"],
+ ["heart", "disease", "surgery", "cardiology", "recovery"] ]
 
-# Convert to a DataFrame for better visualization
-iris_df = pd.DataFrame(data, columns=iris.feature_names)
+model = Word2Vec(sentences=medical_data, vector_size=10, window=2,
+min_count=1, workers=1, epochs=50)
 
-# Perform PCA to reduce dimensionality to 2
-pca = PCA(n_components=2)
-data_reduced = pca.fit_transform(data)
-
-# Create a DataFrame for the reduced data
-reduced_df = pd.DataFrame(data_reduced, columns=['Principal Component 1', 'Principal Component 2'])
-reduced_df['Label'] = labels
-
-# Plot the reduced data
-plt.figure(figsize=(8, 6))
-colors = ['r', 'g', 'b']
-for i, label in enumerate(np.unique(labels)):
-    plt.scatter(
-        reduced_df[reduced_df['Label'] == label]['Principal Component 1'],
-        reduced_df[reduced_df['Label'] == label]['Principal Component 2'],
-        label=label_names[label],
-        color=colors[i]
-    )
-plt.title('PCA on Iris Dataset')
-plt.xlabel('Principal Component 1')
-plt.ylabel('Principal Component 2')
-plt.legend()
-plt.grid()
-plt.show()
+input_word = "patient"
+if input_word in model.wv:
+ similar_words = model.wv.most_similar(input_word, topn=3)
+ print(f"3 words similar to '{input_word}':")
+ for word, similarity in similar_words:
+  print(f"{word} (similarity: {similarity:.2f})")
+else:
+ print(f"'{input_word}' is not in the vocabulary.")
